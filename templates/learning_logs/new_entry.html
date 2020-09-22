@@ -1,0 +1,20 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url "learning_logs:index" %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url "learning_logs:topics" %}">Темы</a></li>
+      <li class="breadcrumb-item"><a href="{% url "learning_logs:entries" topic %}">Статьи - {{ topic }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Добавить статью</li>
+  </ol>
+</nav>
+    <div class="jumbotron">
+        <h1 class="display-4">Тема : <a href="{% url 'learning_logs:entries' topic %}">{{ topic }}</a></h1>
+        <p class="lead">Добавить новую статью</p>
+    <form action="{% url 'learning_logs:new_entry' topic %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-lg btn-block" name="submit">Добавить</button>
+    </form>
+    </div>
+{% endblock content %}

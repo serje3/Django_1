@@ -1,0 +1,36 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+    {% if login is False %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Ошибка!</strong> Неправильный пароль или логин.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+    {% if user.is_authenticated %}
+        <div class="jumbotron">
+  <h1 class="display-4">Давно не виделись, {{user.username}}!</h1>
+  <p class="lead">Ты зашёл на сайт Fanbook</p>
+  <hr class="my-4">
+  <p></p>
+  <a class="btn btn-primary btn-lg" href="{% url "learning_logs:topics" %}" role="button">Перейти к темам</a>
+</div>
+        {% else %}
+        <div class="jumbotron">
+  <h1 class="display-4">Здраствуй, пользователь!</h1>
+  <p class="lead">Ты зашёл на сайт ...</p>
+  <hr class="my-4">
+  <p>Чтобы получить полный функционал сайта, тебе нужно зарегистрироваться или войти в свою учётную запись:),<br>
+  а пока можешь почитать что пишут другие.</p>
+  <a class="btn btn-primary btn-lg" href="{% url "learning_logs:topics" %}" role="button">Перейти в темы</a>
+</div>
+    {% endif %}
+
+{% endblock content %}

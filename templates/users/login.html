@@ -1,0 +1,14 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+    {% if form.errors %}
+    <p>Имя пользователя или пароль некорректны</p>
+    {% endif %}
+
+    <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Войти</button>
+{#        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />#}
+    </form>
+    <p><a href="{% url 'users:register' %}">Не зарегистрированы?</a></p>
+{% endblock content %}

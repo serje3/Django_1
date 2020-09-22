@@ -1,0 +1,34 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+
+        <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url "learning_logs:index" %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Темы</li>
+  </ol>
+</nav>
+    <hr class="my-4">
+    {% if user.is_authenticated %}
+    <h3>Темы  <a class="mx-4 float-right btn btn-light btn-sm" href="{% url 'learning_logs:new_topic' %}" role="button">Добавить тему</a></h3>
+        {% else %}
+        <h3>Темы <span class="mt-2 float-right font-weight-normal" style="font-size: medium">Чтобы добавить свою тему - авторизируйтесь</span>
+        </h3>
+    {% endif %}
+<hr class="my-4">
+        {% for topic in topics %}
+{#            <li><a href="{% url "learning_logs:entries" topic.text %}">{{ topic }}</a></li>#}
+{#            {% empty %}#}
+{#            <li>No topics have been added yet</li>#}
+<div class="mt-2 card">
+<div class="card-header">
+    Дата: {{ topic.date_added }}
+</div>
+<div class="card-body">
+    <h5 class="card-title">{{topic.text}}</h5>
+    <p class="card-text">Количество статей: {{ topic.count_entries }}</p>
+    <a href="{% url "learning_logs:entries" topic.text %}" class="btn btn-primary">Перейти</a>
+</div>
+</div>
+        {% endfor %}
+
+{% endblock content %}

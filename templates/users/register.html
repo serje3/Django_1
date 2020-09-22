@@ -1,0 +1,21 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+    <div class="jumbotron">
+  <h1 class="display-4">Регистрация</h1>
+  <p class="lead">Добро пожаловать! Введите свои данные.</p>
+  <hr class="my-4">
+  <p></p>
+    <form action="{% url 'users:register' %}" method="post">
+        {% csrf_token %}
+        {{ form. }}
+        <h5>Имя пользователя:</h5>
+        {{ form.username }}
+        <h5>Пароль:</h5>
+        {{ form.password1 }}
+        <h5>Подтверждение пароля:</h5>
+        {{ form.password2 }}
+        <button class="mt-3 btn btn-primary btn-lg btn-block" name="submit">Зарегистрироваться</button>
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}">
+    </form>
+    </div>
+{% endblock content %}

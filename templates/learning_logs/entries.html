@@ -1,0 +1,52 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url "learning_logs:index" %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url "learning_logs:topics" %}">Темы</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Статьи - {{ topic }}</li>
+  </ol>
+</nav>
+    <hr class="my-4">
+    {% if user.is_authenticated %}
+    <h3>{{ topic}}  <a class="mx-4 float-right btn btn-light btn-sm" href="{% url 'learning_logs:new_entry' topic%}" role="button">Добавить статью</a></h3>
+        {% else %}
+        <h3>{{ topic}}  <span class="mt-2 float-right font-weight-normal" style="font-size: medium">Чтобы добавить статью - авторизируйтесь</span></h3>
+    {% endif %}
+<hr class="my-4">
+
+
+
+
+        {% for entry in entries %}
+            <div class="mt-4 card">
+  <div class="card-header">
+    {{ entry.name }} {% if user.is_authenticated %}
+      <a class="float-right btn btn-light btn-sm" href="{% url 'learning_logs:edit_entry' topic entry.id %}" role="button">Редактировать</a>
+  {% endif %}
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <p>{{ entry.text }}</p>
+      <footer class="blockquote-footer">Дата публикации: <cite title="Source Title">{{ entry.date_added}}</cite></footer>
+    </blockquote>
+
+  </div>
+</div>
+                {% empty %}
+
+                <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Здесь пока нет статей:^)</h1>
+      {% if user.is_authenticated %}
+    <p class="lead">Вы можете добавить свою <a class="btn btn-light btn-sm" href="{% url 'learning_logs:new_topic' %}" role="button">статью</a></p>
+                    {% else %}
+          <p class="lead">Войдите в учётную запись и добавьте свою</p>
+      {% endif %}
+  </div>
+</div>
+
+</ul>
+        {% endfor %}
+
+{% endblock content %}

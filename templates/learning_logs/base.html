@@ -1,0 +1,79 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FanBook</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        #buttonTip:active{
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <a class="navbar-brand" href="{% url 'learning_logs:index' %}">FanBook</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="{% url 'learning_logs:topics' %}">Темы</a>
+        {% if user.is_authenticated %}
+    <span class="navbar-text">
+        Добро пожаловать, {{ user.username }}.<a href="{% url 'users:logout' %}">Выйти</a>
+        </span>
+        {% else %}
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Login
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+      <div class="ml-2 mr-2 form-group">
+        <label for="usname">Имя пользователя</label>
+        <input class="form-control" id="usname" name="username">
+
+      </div>
+      <div class="ml-2 mr-2 form-group">
+        <label for="Password1">Пароль</label>
+        <input type="password" class="form-control" id="Password1" name="password">
+              </div>
+{#      <div class="form-group form-check">#}
+{#        <input type="checkbox" class="form-check-input" id="exampleCheck1">#}
+{#        <label class="form-check-label" for="exampleCheck1">Check me out</label>#}
+{#      </div>#}
+      <button type="submit" class="mx-auto btn btn-primary" name="submit" style="display: block;width: 60%">Войти</button>
+    </form>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'users:register' %}">Не зарегистрированы?</a>
+        </div>
+      </li>
+        {% endif %}
+    </div>
+</div>
+</nav>
+{#<p>#}
+{#    <a href="{% url 'learning_logs:index' %}"></a>#}
+{#    &nbsp;-&nbsp;#}
+{#    <a href="{% url 'learning_logs:topics' %}">Topics</a>#}
+{#    {% if user.is_authenticated %}#}
+{#        Добро пожаловать, {{ user.username }}.<a href="{% url 'users:logout' %}">Выйти</a>#}
+{#    {% else %}#}
+{#        <a href="{% url 'users:login' %}">Войти</a> -#}
+{#        <a href="{% url 'users:register' %}">Регистрация</a>#}
+{#    {% endif %}#}
+{#</p>#}
+
+
+<div class="container">
+  <!-- Content here -->
+    {% block content %}{% endblock content %}
+</div>
+</body>
+</html>

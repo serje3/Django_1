@@ -1,0 +1,33 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+    <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url "learning_logs:index" %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url "learning_logs:topics" %}">Темы</a></li>
+      <li class="breadcrumb-item"><a href="{% url "learning_logs:entries" topic %}">Статьи - {{ topic }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Редактирование статьи</li>
+
+
+  </ol>
+</nav>
+    <div class="jumbotron">
+  <h1 class="display-4">Тема - <a href="{% url 'learning_logs:entries' topic %}">{{ topic }}</a></h1>
+  <p class="lead">Редактирование записи
+      <a class="float-right btn btn-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Статья</a>
+        </p>
+        <div class="collapse" id="collapseExample">
+  <div class="card card-body">
+      {{ entry.name }}
+      <hr>
+      {{ entry.text}}
+  </div>
+</div>
+        <hr class="my-4">
+    <form action="{% url 'learning_logs:edit_entry' topic entry.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-lg btn-block" name="submit">Изменить</button>
+    </form>
+    </div>
+{% endblock content %}
